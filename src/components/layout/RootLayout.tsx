@@ -1,14 +1,12 @@
 import {
-  DesktopOutlined,
-  FileOutlined,
+  MessageOutlined,
   PieChartOutlined,
-  TeamOutlined,
-  UserOutlined,
+  ToolOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
-import { Breadcrumb, Layout, Menu, theme } from "antd";
+import { Layout, Menu, theme } from "antd";
 import React, { useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 
 const { Content, Sider } = Layout;
 
@@ -29,26 +27,19 @@ function getItem(
 }
 
 const items: MenuItem[] = [
-  getItem("Wallets", "1", <PieChartOutlined />),
-  getItem("Option 2", "2", <DesktopOutlined />),
-  getItem("User", "sub1", <UserOutlined />, [
-    getItem("Tom", "3"),
-    getItem("Bill", "4"),
-    getItem("Alex", "5"),
-  ]),
-  getItem("Team", "sub2", <TeamOutlined />, [
-    getItem("Team 1", "6"),
-    getItem("Team 2", "8"),
-  ]),
-  getItem("Files", "9", <FileOutlined />),
+  getItem("Tool", "", <ToolOutlined />),
+  getItem("Knowledge", "knowledge", <PieChartOutlined />),
+  getItem("Chat", "chat", <MessageOutlined />),
 ];
 
 const RootLayout: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
+  // const [label, setLabel] = useState("Home");
+  const navigate = useNavigate();
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
-
+  //  onClick={() => `)}
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Sider
@@ -58,6 +49,9 @@ const RootLayout: React.FC = () => {
       >
         <div className="demo-logo-vertical" />
         <Menu
+          onSelect={(item) => {
+            navigate(`/${item.key}`);
+          }}
           theme="dark"
           defaultSelectedKeys={["1"]}
           mode="inline"
@@ -65,21 +59,19 @@ const RootLayout: React.FC = () => {
         />
       </Sider>
       <Layout>
-        {/* <Header style={{ padding: 0, background: colorBgContainer }} /> */}
         <Content style={{ margin: "0 16px" }}>
-          <Breadcrumb style={{ margin: "16px 0" }}>
-            <Breadcrumb.Item>Wallets</Breadcrumb.Item>
-            {/* <Breadcrumb.Item>Bill</Breadcrumb.Item> */}
-          </Breadcrumb>
+          {/* <Breadcrumb style={{ margin: "16px 0" }}>
+            <Breadcrumb.Item>{label}</Breadcrumb.Item>
+          </Breadcrumb> */}
           <div
             style={{
+              marginTop: 20,
               background: colorBgContainer,
               minHeight: 280,
               padding: 24,
               borderRadius: borderRadiusLG,
             }}
           >
-            {" "}
             <Outlet />
           </div>
         </Content>
