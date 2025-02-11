@@ -73,7 +73,11 @@ const ChatsPage = () => {
       {/* Message */}
       <div
         id="messages"
-        style={{ maxHeight: 650, overflow: "auto", paddingBottom: 12 }}
+        style={{
+          maxHeight: 650,
+          overflow: "auto",
+          paddingBottom: 12,
+        }}
       >
         {messages.map((message, index) => (
           <Flex
@@ -88,6 +92,7 @@ const ChatsPage = () => {
                 paddingRight: 16,
                 paddingBottom: 8,
                 paddingTop: 8,
+                maxWidth: "75%",
               }}
             >
               <MarkdownPreview
