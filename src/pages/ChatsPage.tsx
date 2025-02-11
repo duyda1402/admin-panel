@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { SendOutlined } from "@ant-design/icons";
 import { useMutation } from "@tanstack/react-query";
 import { apiChatAgent } from "../api/source.api";
+import MarkdownPreview from "@uiw/react-markdown-preview";
 
 const boxShadow =
   "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)";
@@ -27,9 +28,10 @@ const ChatsPage = () => {
       mutationFn: async (data: { say: string }) => apiChatAgent(data),
       onSuccess: (data: any) => {
         const arrMessages = ld.cloneDeep(messages);
-        setMessages(
+        setMessages(() =>
           arrMessages.concat({ role: "agent", content: data?.kwargs?.content })
         );
+        setTimeout(() => handlerScroll(), 500);
       },
       onError: (error: any) => {
         toast.error(error?.message);
@@ -43,24 +45,36 @@ const ChatsPage = () => {
         toast.error("Please enter a message!");
       }
       const arrMessages = ld.cloneDeep(messages);
-      setMessages(arrMessages.concat({ role: "user", content: data.say }));
+      setMessages(() =>
+        arrMessages.concat({ role: "user", content: data.say })
+      );
       reset({ say: "" });
+      setTimeout(() => handlerScroll(), 500);
       await sendMessageToAgent({ say: data.say });
     } catch (error: any) {
       toast.error(error?.message);
     }
   };
 
+  const handlerScroll = () => {
+    const messagesDiv = document.getElementById("messages");
+    if (!messagesDiv) return;
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+  };
+
   return (
     <Flex
       vertical
       style={{
-        height: 800,
+        height: 700,
       }}
       justify="space-between"
     >
       {/* Message */}
-      <div>
+      <div
+        id="messages"
+        style={{ maxHeight: 650, overflow: "auto", paddingBottom: 12 }}
+      >
         {messages.map((message, index) => (
           <Flex
             key={index}
@@ -76,7 +90,14 @@ const ChatsPage = () => {
                 paddingTop: 8,
               }}
             >
-              {message.content}
+              <MarkdownPreview
+                source={message.content}
+                style={{
+                  background: "transparent",
+                  color: "#343a40",
+                  fontSize: 14,
+                }}
+              />
             </p>
           </Flex>
         ))}
@@ -88,7 +109,11 @@ const ChatsPage = () => {
       </div>
       {/* Chat Input */}
       <div
-        style={{ boxShadow: boxShadow, borderRadius: 12, position: "relative" }}
+        style={{
+          boxShadow: boxShadow,
+          borderRadius: 12,
+          position: "relative",
+        }}
       >
         <Controller
           control={control}
