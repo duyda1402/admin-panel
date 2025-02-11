@@ -91,3 +91,16 @@ export const apiCrawlDataByType = async (
     throw new Error(err.response?.data?.message);
   }
 };
+
+export const apiChatAgent = async (data: { say: string }): Promise<any> => {
+  try {
+    const response = await axiosInstance.post<any, ResponseAPI<any>>(
+      `/agent/input`,
+      data
+    );
+    return response.data;
+  } catch (err: any) {
+    console.log("apiChatAgent failed: ", err.message);
+    throw new Error(err.response?.data?.message);
+  }
+};
