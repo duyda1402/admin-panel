@@ -28,10 +28,10 @@ function getItem(
 }
 
 const items: MenuItem[] = [
-  getItem("Tool", "", <ToolOutlined />),
-  getItem("Knowledge", "knowledge", <PieChartOutlined />),
   getItem("Chat", "chat", <MessageOutlined />),
   getItem("Agents", "agents", <RobotOutlined />),
+  getItem("Tool", "", <ToolOutlined />),
+  getItem("Knowledge", "knowledge", <PieChartOutlined />),
 ];
 
 const RootLayout: React.FC = () => {
