@@ -15,7 +15,7 @@ const router = createBrowserRouter([
     element: <RootLayout />,
     children: [
       {
-        path: "/",
+        path: "tools",
         element: <SourcePage />,
       },
       {
@@ -23,7 +23,7 @@ const router = createBrowserRouter([
         element: <KnowledgePage />,
       },
       {
-        path: "chat",
+        path: "",
         element: <ChatsPage />,
       },
       {

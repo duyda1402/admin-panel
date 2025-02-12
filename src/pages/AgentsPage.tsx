@@ -147,18 +147,20 @@ const AgentsPage = () => {
                 padding: "14px 24px",
                 boxShadow: boxShadow,
                 borderRadius: 12,
+                width: 260,
               }}
             >
-              <Flex gap={12}>
+              <Flex gap={18}>
                 <Avatar size={40} src={nameToRandomAvatar(agent.slug)} />
-                <Space size={4} direction="vertical">
-                  <Text>{agent.name}</Text>
+                <Space size={4} direction="vertical" style={{ flex: 1 }}>
+                  <Text strong>{agent.name}</Text>
+
                   <Paragraph
                     ellipsis={{
                       rows: 2,
-                      expandable: "collapsible",
+                      expandable: false,
                     }}
-                    style={{ fontSize: 12, color: "#8c8c8c" }}
+                    style={{ fontSize: 12, color: "#8c8c8c", minHeight: 38 }}
                   >
                     {agent.description}
                   </Paragraph>

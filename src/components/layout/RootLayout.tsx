@@ -28,9 +28,9 @@ function getItem(
 }
 
 const items: MenuItem[] = [
-  getItem("Chat", "chat", <MessageOutlined />),
+  getItem("Chat", "", <MessageOutlined />),
   getItem("Agents", "agents", <RobotOutlined />),
-  getItem("Tool", "", <ToolOutlined />),
+  getItem("Tool", "tools", <ToolOutlined />),
   getItem("Knowledge", "knowledge", <PieChartOutlined />),
 ];
 
