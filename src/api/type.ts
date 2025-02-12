@@ -18,3 +18,12 @@ export interface IFSource {
   path?: string;
   type: "twitter" | "api" | "website";
 }
+export interface IFAgent {
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
+  name: string;
+  slug: string;
+  description: string;
+  prompt: string;
+}

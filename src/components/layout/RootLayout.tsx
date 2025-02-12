@@ -1,6 +1,7 @@
 import {
   MessageOutlined,
   PieChartOutlined,
+  RobotOutlined,
   ToolOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
@@ -30,6 +31,7 @@ const items: MenuItem[] = [
   getItem("Tool", "", <ToolOutlined />),
   getItem("Knowledge", "knowledge", <PieChartOutlined />),
   getItem("Chat", "chat", <MessageOutlined />),
+  getItem("Agents", "agents", <RobotOutlined />),
 ];
 
 const RootLayout: React.FC = () => {

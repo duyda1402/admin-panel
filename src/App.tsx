@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import KnowledgePage from "./pages/KnowledgePage";
 import { ToastContainer } from "react-toastify";
 import ChatsPage from "./pages/ChatsPage";
+import AgentsPage from "./pages/AgentsPage";
 
 const queryClient = new QueryClient();
 
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
       {
         path: "chat",
         element: <ChatsPage />,
+      },
+      {
+        path: "agents",
+        element: <AgentsPage />,
       },
       {
         path: "*",

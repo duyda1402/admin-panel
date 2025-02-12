@@ -1,5 +1,5 @@
 import axiosInstance from "./instance";
-import { IFSource, ResponseAPI } from "./type";
+import { IFAgent, IFSource, ResponseAPI } from "./type";
 
 export const apiFetchSourceByType = async (
   type: "api" | "twitter" | "website"
@@ -92,15 +92,48 @@ export const apiCrawlDataByType = async (
   }
 };
 
-export const apiChatAgent = async (data: { say: string }): Promise<any> => {
+export const apiChatAgent = async (data: {
+  agentId: string;
+  say: string;
+  threadId?: string;
+}): Promise<any> => {
   try {
+    const { agentId, ...props } = data;
     const response = await axiosInstance.post<any, ResponseAPI<any>>(
-      `/agent/input`,
-      data
+      `/agent/${agentId}/ask`,
+      props
     );
     return response.data;
   } catch (err: any) {
     console.log("apiChatAgent failed: ", err.message);
+    throw new Error(err.response?.data?.message);
+  }
+};
+export const apiFetchAgents = async (): Promise<Array<IFAgent>> => {
+  try {
+    const response = await axiosInstance.get<any, ResponseAPI<IFAgent[]>>(
+      `/agent`
+    );
+    return response.data;
+  } catch (err: any) {
+    console.log("apiFetchAgents failed: ", err.message);
+    throw new Error(err.response?.data?.message);
+  }
+};
+
+export const apiCreateAgents = async (data: {
+  name: string;
+  description?: string;
+  prompt?: string;
+}): Promise<Array<IFAgent>> => {
+  try {
+    const response = await axiosInstance.post<any, ResponseAPI<IFAgent[]>>(
+      `/agent`,
+      data
+    );
+    return response.data;
+  } catch (err: any) {
+    console.log("apiFetchAgents failed: ", err.message);
     throw new Error(err.response?.data?.message);
   }
 };
