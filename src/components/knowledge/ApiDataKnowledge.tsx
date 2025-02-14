@@ -21,6 +21,7 @@ const ApiDataKnowledge = () => {
           <Space>
             <Tag color="green">Active</Tag>
             <Tag color="blue">{item.url}</Tag>
+            {item.path && <Tag>{item.path}</Tag>}
           </Space>
         ),
         children: <PreviewData source={item} />,
