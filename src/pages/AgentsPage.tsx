@@ -139,7 +139,7 @@ const AgentsPage = () => {
       {isLoading ? (
         <Spin />
       ) : (
-        <Space size={20}>
+        <Space size={20} style={{ flexWrap: "wrap" }}>
           {(data || []).map((agent) => (
             <div
               key={agent.id}
