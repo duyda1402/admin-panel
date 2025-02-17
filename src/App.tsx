@@ -6,6 +6,7 @@ import KnowledgePage from "./pages/KnowledgePage";
 import { ToastContainer } from "react-toastify";
 import ChatsPage from "./pages/ChatsPage";
 import AgentsPage from "./pages/AgentsPage";
+import AgentDetailsPage from "./pages/AgentDetailsPage";
 
 const queryClient = new QueryClient();
 
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
       {
         path: "agents",
         element: <AgentsPage />,
+      },
+      {
+        path: "agents/:agentSlug",
+        element: <AgentDetailsPage />,
       },
       {
         path: "*",

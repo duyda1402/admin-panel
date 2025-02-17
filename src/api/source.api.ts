@@ -93,14 +93,14 @@ export const apiCrawlDataByType = async (
 };
 
 export const apiChatAgent = async (data: {
-  agentId: string;
+  agentSlug: string;
   say: string;
   threadId?: string;
 }): Promise<any> => {
   try {
-    const { agentId, ...props } = data;
+    const { agentSlug, ...props } = data;
     const response = await axiosInstance.post<any, ResponseAPI<any>>(
-      `/agent/${agentId}/ask`,
+      `/agent/${agentSlug}/ask`,
       props
     );
     return response.data;
@@ -113,6 +113,38 @@ export const apiFetchAgents = async (): Promise<Array<IFAgent>> => {
   try {
     const response = await axiosInstance.get<any, ResponseAPI<IFAgent[]>>(
       `/agent`
+    );
+    return response.data;
+  } catch (err: any) {
+    console.log("apiFetchAgents failed: ", err.message);
+    throw new Error(err.response?.data?.message);
+  }
+};
+
+export const apiFetchAgentBySlug = async (slug: string): Promise<IFAgent> => {
+  try {
+    const response = await axiosInstance.get<any, ResponseAPI<IFAgent>>(
+      `/agent/record/${slug}`
+    );
+    return response.data;
+  } catch (err: any) {
+    console.log("apiFetchAgents failed: ", err.message);
+    throw new Error(err.response?.data?.message);
+  }
+};
+
+export const apiUpdateAgentBySlug = async (
+  slug: string,
+  data: {
+    name: string;
+    description?: string;
+    prompt?: string;
+  }
+): Promise<IFAgent> => {
+  try {
+    const response = await axiosInstance.put<any, ResponseAPI<IFAgent>>(
+      `/agent/record/${slug}`,
+      data
     );
     return response.data;
   } catch (err: any) {

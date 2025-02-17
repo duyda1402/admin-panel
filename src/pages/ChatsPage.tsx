@@ -50,7 +50,7 @@ const ChatsPage = () => {
     {
       mutationKey: ["qa-agent"],
       mutationFn: async (data: {
-        agentId: string;
+        agentSlug: string;
         say: string;
         threadId?: string;
       }) => apiChatAgent(data),
@@ -81,7 +81,7 @@ const ChatsPage = () => {
       reset({ say: "" });
       setTimeout(() => handlerScroll(), 500);
       await sendMessageToAgent({
-        agentId: agentSelected?.id,
+        agentSlug: agentSelected?.slug,
         say: data.say,
         threadId: threadId,
       });

@@ -15,12 +15,14 @@ import { Controller, useForm } from "react-hook-form";
 import { useState } from "react";
 import TextArea from "antd/es/input/TextArea";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 const { Text, Paragraph } = Typography;
 
 const boxShadow =
   "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)";
 const AgentsPage = () => {
   const [openCreate, setOpenCreate] = useState(false);
+  const navigate = useNavigate();
   const { data, isLoading, refetch } = useQuery({
     queryKey: ["agents"],
     queryFn: async () => apiFetchAgents(),
@@ -149,6 +151,7 @@ const AgentsPage = () => {
                 borderRadius: 12,
                 width: 260,
               }}
+              onClick={() => navigate(`/agents/${agent.slug}`)}
             >
               <Flex gap={18}>
                 <Avatar size={40} src={nameToRandomAvatar(agent.slug)} />
