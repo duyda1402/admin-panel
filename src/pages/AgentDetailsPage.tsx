@@ -15,7 +15,11 @@ import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { apiFetchAgentBySlug, apiUpdateAgentBySlug } from "../api/source.api";
+import {
+  apiDeleteAgentBySlug,
+  apiFetchAgentBySlug,
+  apiUpdateAgentBySlug,
+} from "../api/source.api";
 import { nameToRandomAvatar } from "../utils";
 const { Text } = Typography;
 
@@ -46,12 +50,23 @@ const AgentDetailsPage = () => {
     },
   });
 
-  const { mutateAsync: createAgent, isPending: isLoadingCreate } = useMutation({
+  const { mutateAsync: updateAgent, isPending: isLoadingUpdate } = useMutation({
     mutationKey: ["update-agents"],
     mutationFn: async (data: any) => apiUpdateAgentBySlug(agent?.slug!, data),
     onSuccess: () => {
       refetch();
       toast.success("Agent update successfully!");
+    },
+    onError: (error: any) => {
+      toast.error(error?.message);
+    },
+  });
+  const { mutateAsync: deleteAgent, isPending: isLoadingDelete } = useMutation({
+    mutationKey: ["update-agents"],
+    mutationFn: async () => apiDeleteAgentBySlug(agent?.slug!),
+    onSuccess: () => {
+      navigate("/agents");
+      toast.success("Agent deleted successfully!");
     },
     onError: (error: any) => {
       toast.error(error?.message);
@@ -70,7 +85,7 @@ const AgentDetailsPage = () => {
   }, [agent, isLoading, isFetching]);
 
   const onSubmit = async (data: any) => {
-    await createAgent({ ...data });
+    await updateAgent({ ...data });
   };
 
   if (isLoading) {
@@ -161,7 +176,15 @@ const AgentDetailsPage = () => {
       </div>
       <Flex gap={12} justify="flex-end" style={{ width: "100%" }}>
         <Button
-          loading={isLoadingCreate}
+          loading={isLoadingDelete}
+          color="danger"
+          variant="filled"
+          onClick={() => deleteAgent()}
+        >
+          Delete
+        </Button>
+        <Button
+          loading={isLoadingUpdate}
           type="primary"
           onClick={handleSubmit(onSubmit)}
         >

@@ -152,6 +152,17 @@ export const apiUpdateAgentBySlug = async (
     throw new Error(err.response?.data?.message);
   }
 };
+export const apiDeleteAgentBySlug = async (slug: string): Promise<any> => {
+  try {
+    const response = await axiosInstance.delete<any, ResponseAPI<any>>(
+      `/agent/record/${slug}`
+    );
+    return response.data;
+  } catch (err: any) {
+    console.log("apiFetchAgents failed: ", err.message);
+    throw new Error(err.response?.data?.message);
+  }
+};
 
 export const apiCreateAgents = async (data: {
   name: string;
