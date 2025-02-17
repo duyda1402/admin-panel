@@ -180,3 +180,13 @@ export const apiCreateAgents = async (data: {
     throw new Error(err.response?.data?.message);
   }
 };
+
+export const apiCheckHealthy = async (): Promise<any> => {
+  try {
+    const response = await axiosInstance.get<any, ResponseAPI<any>>(`/healthy`);
+    return response;
+  } catch (err: any) {
+    console.log("apiFetchAgents failed: ", err.message);
+    throw new Error(err.response?.data?.message);
+  }
+};

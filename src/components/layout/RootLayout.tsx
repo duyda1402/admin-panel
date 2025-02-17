@@ -4,10 +4,12 @@ import {
   RobotOutlined,
   ToolOutlined,
 } from "@ant-design/icons";
+import { useQuery } from "@tanstack/react-query";
 import type { MenuProps } from "antd";
-import { Layout, Menu, theme } from "antd";
+import { Empty, Flex, Layout, Menu, Spin, theme, Typography } from "antd";
 import React, { useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
+import { apiCheckHealthy } from "../../api/source.api";
 
 const { Content, Sider } = Layout;
 
@@ -42,6 +44,45 @@ const RootLayout: React.FC = () => {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
   //  onClick={() => `)}
+
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["healthy"],
+    queryFn: async () => apiCheckHealthy(),
+    retry: 1,
+  });
+
+  if (isLoading) {
+    return (
+      <Flex
+        style={{ width: "100vw", height: "100vh" }}
+        justify="center"
+        align="center"
+      >
+        <Spin />
+      </Flex>
+    );
+  }
+
+  if (!data || isError) {
+    return (
+      <Flex
+        style={{ width: "100vw", height: "100vh" }}
+        justify="center"
+        align="center"
+      >
+        <Empty
+          image={Empty.PRESENTED_IMAGE_DEFAULT}
+          description={
+            <Typography.Text>
+              The server is currently unavailable. Please contact the
+              administrator and try again later!
+            </Typography.Text>
+          }
+        ></Empty>
+      </Flex>
+    );
+  }
+
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Sider
