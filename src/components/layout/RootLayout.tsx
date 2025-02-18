@@ -33,8 +33,8 @@ function getItem(
 const items: MenuItem[] = [
   getItem("Chat", "", <MessageOutlined />),
   getItem("Agents", "agents", <RobotOutlined />),
-  getItem("Tool", "tools", <ToolOutlined />),
-  getItem("Knowledge", "knowledge", <PieChartOutlined />),
+  getItem("Sources", "tools", <ToolOutlined />),
+  getItem("Data Crawling", "knowledge", <PieChartOutlined />),
   getItem("Setting", "settings", <SettingOutlined />),
 ];
 
