@@ -2,13 +2,14 @@ import {
   MessageOutlined,
   PieChartOutlined,
   RobotOutlined,
+  SettingOutlined,
   ToolOutlined,
 } from "@ant-design/icons";
 import { useQuery } from "@tanstack/react-query";
 import type { MenuProps } from "antd";
-import { Empty, Flex, Layout, Menu, Spin, theme, Typography } from "antd";
+import { Empty, Flex, Layout, Menu, Spin, Typography } from "antd";
 import React, { useState } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { apiCheckHealthy } from "../../api/source.api";
 
 const { Content, Sider } = Layout;
@@ -34,16 +35,14 @@ const items: MenuItem[] = [
   getItem("Agents", "agents", <RobotOutlined />),
   getItem("Tool", "tools", <ToolOutlined />),
   getItem("Knowledge", "knowledge", <PieChartOutlined />),
+  getItem("Setting", "settings", <SettingOutlined />),
 ];
 
 const RootLayout: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
-  // const [label, setLabel] = useState("Home");
   const navigate = useNavigate();
-  const {
-    token: { colorBgContainer, borderRadiusLG },
-  } = theme.useToken();
-  //  onClick={() => `)}
+  const location = useLocation();
+  const firstValue = location?.pathname?.split("/")[1];
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["healthy"],
@@ -96,23 +95,17 @@ const RootLayout: React.FC = () => {
             navigate(`/${item.key}`);
           }}
           theme="dark"
-          defaultSelectedKeys={["1"]}
+          defaultSelectedKeys={[firstValue]}
           mode="inline"
           items={items}
         />
       </Sider>
       <Layout>
         <Content style={{ margin: "0 16px" }}>
-          {/* <Breadcrumb style={{ margin: "16px 0" }}>
-            <Breadcrumb.Item>{label}</Breadcrumb.Item>
-          </Breadcrumb> */}
           <div
             style={{
               marginTop: 20,
-              background: colorBgContainer,
               minHeight: 280,
-              padding: 24,
-              borderRadius: borderRadiusLG,
             }}
           >
             <Outlet />

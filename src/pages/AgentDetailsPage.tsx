@@ -102,7 +102,16 @@ const AgentDetailsPage = () => {
   }
 
   return (
-    <Space direction="vertical" style={{ width: "100%" }} size={20}>
+    <Space
+      direction="vertical"
+      style={{
+        width: "100%",
+        background: "#fff",
+        padding: 24,
+        borderRadius: 16,
+      }}
+      size={20}
+    >
       <Breadcrumb style={{ margin: "16px 0", cursor: "pointer" }}>
         <Breadcrumb.Item onClick={() => navigate("/agents")}>
           Agents

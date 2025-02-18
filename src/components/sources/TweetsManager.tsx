@@ -121,6 +121,7 @@ function TweetsManager() {
     {
       title: "Status",
       dataIndex: "refId",
+      key: "status",
       render: (refId?: string) => (
         <>
           {refId ? (
@@ -134,6 +135,7 @@ function TweetsManager() {
     {
       title: "Action",
       dataIndex: "id",
+      key: "action",
       render: (id: string) => (
         <>
           <Button

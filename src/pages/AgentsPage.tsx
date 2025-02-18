@@ -58,9 +58,17 @@ const AgentsPage = () => {
   };
 
   return (
-    <>
+    <Space
+      direction="vertical"
+      style={{
+        width: "100%",
+        background: "#fff",
+        padding: 24,
+        borderRadius: 16,
+      }}
+    >
       <Drawer
-        title="New Agents"
+        title="Configure your agent"
         loading={isLoadingCreate}
         onClose={() => setOpenCreate(false)}
         open={openCreate}
@@ -173,7 +181,7 @@ const AgentsPage = () => {
           ))}
         </Space>
       )}
-    </>
+    </Space>
   );
 };
 

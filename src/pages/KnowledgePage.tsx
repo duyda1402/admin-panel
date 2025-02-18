@@ -16,11 +16,6 @@ const KnowledgePage = () => {
       label: "Data API",
       children: <ApiDataKnowledge />,
     },
-    {
-      key: "web",
-      label: "Web Browser",
-      children: <div>Coming Soon</div>,
-    },
   ];
 
   const { mutateAsync: crawlAllTwitter, isPending: isLoadingTwitter } =
@@ -35,7 +30,15 @@ const KnowledgePage = () => {
   });
 
   return (
-    <Space direction="vertical" style={{ width: "100%" }}>
+    <Space
+      direction="vertical"
+      style={{
+        width: "100%",
+        background: "#fff",
+        padding: 24,
+        borderRadius: 16,
+      }}
+    >
       <Flex style={boxStyle} justify="flex-end">
         <Button
           type="primary"

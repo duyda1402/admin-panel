@@ -1,4 +1,4 @@
-import { Tabs, TabsProps } from "antd";
+import { Space, Tabs, TabsProps } from "antd";
 import ApiDataManager from "../components/sources/ApiDataManager";
 
 import TweetsManager from "../components/sources/TweetsManager";
@@ -28,7 +28,19 @@ function SourcePage({}: Props) {
       children: <WebsiteManager />,
     },
   ];
-  return <Tabs defaultActiveKey="twitter" items={items} onChange={onChange} />;
+  return (
+    <Space
+      direction="vertical"
+      style={{
+        width: "100%",
+        background: "#fff",
+        padding: 24,
+        borderRadius: 16,
+      }}
+    >
+      <Tabs defaultActiveKey="twitter" items={items} onChange={onChange} />
+    </Space>
+  );
 }
 
 export default SourcePage;

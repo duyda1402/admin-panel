@@ -7,6 +7,7 @@ import { ToastContainer } from "react-toastify";
 import ChatsPage from "./pages/ChatsPage";
 import AgentsPage from "./pages/AgentsPage";
 import AgentDetailsPage from "./pages/AgentDetailsPage";
+import SettingPage from "./pages/SettingPage";
 
 const queryClient = new QueryClient();
 
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
       {
         path: "agents/:agentSlug",
         element: <AgentDetailsPage />,
+      },
+      {
+        path: "settings",
+        element: <SettingPage />,
       },
       {
         path: "*",

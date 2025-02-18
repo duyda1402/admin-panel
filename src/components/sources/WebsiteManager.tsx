@@ -23,12 +23,6 @@ function WebsiteManager() {
       ),
     },
     {
-      title: "Path",
-      dataIndex: "path",
-      key: "path",
-      render: (refId: string) => <Tag>{refId}</Tag>,
-    },
-    {
       title: "Type",
       dataIndex: "type",
       key: "type",

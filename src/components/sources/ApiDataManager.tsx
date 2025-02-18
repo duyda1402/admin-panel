@@ -87,6 +87,7 @@ function ApiDataManager() {
     {
       title: "Action",
       dataIndex: "id",
+      key: "action",
       render: (id: string) => (
         <>
           <Button

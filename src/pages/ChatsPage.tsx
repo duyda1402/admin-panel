@@ -1,4 +1,4 @@
-import { Avatar, Button, Flex, Select, Spin, Typography } from "antd";
+import { Avatar, Button, Flex, Select, Space, Spin, Typography } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { useEffect, useState } from "react";
 import * as ld from "lodash";
@@ -102,7 +102,15 @@ const ChatsPage = () => {
   };
 
   return (
-    <>
+    <Space
+      style={{
+        width: "100%",
+        background: "#fff",
+        padding: 24,
+        borderRadius: 16,
+      }}
+      direction="vertical"
+    >
       <Flex style={boxStyle} justify="flex-end" align="center">
         <Text strong>Agent: </Text>
         <Select
@@ -234,7 +242,7 @@ const ChatsPage = () => {
           )}
         </>
       )}
-    </>
+    </Space>
   );
 };
 
