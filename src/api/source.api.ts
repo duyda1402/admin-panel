@@ -1,5 +1,5 @@
 import axiosInstance from "./instance";
-import { IFAgent, IFSource, ResponseAPI } from "./type";
+import { IFAgent, IFSettingConfig, IFSource, ResponseAPI } from "./type";
 
 export const apiFetchSourceByType = async (
   type: "api" | "twitter" | "website"
@@ -120,12 +120,52 @@ export const apiFetchAgents = async (): Promise<Array<IFAgent>> => {
     throw new Error(err.response?.data?.message);
   }
 };
+export const apiUpdateSettingConfig = async (
+  data: IFSettingConfig
+): Promise<any> => {
+  try {
+    const response = await axiosInstance.post<any, ResponseAPI<any>>(
+      `/system/config`,
+      data
+    );
+    return response.data;
+  } catch (err: any) {
+    console.log("apiFetchAgents failed: ", err.message);
+    throw new Error(err.response?.data?.message);
+  }
+};
+export const apiGetLinkConnectTwitter = async (data: {
+  redirectUrl: string;
+}): Promise<string> => {
+  try {
+    const response = await axiosInstance.post<any, ResponseAPI<string>>(
+      `/system/twitter/connect`,
+      data
+    );
+    return response.data;
+  } catch (err: any) {
+    console.log("apiFetchAgents failed: ", err.message);
+    throw new Error(err.response?.data?.message);
+  }
+};
 
 export const apiFetchAgentBySlug = async (slug: string): Promise<IFAgent> => {
   try {
     const response = await axiosInstance.get<any, ResponseAPI<IFAgent>>(
       `/agent/record/${slug}`
     );
+    return response.data;
+  } catch (err: any) {
+    console.log("apiFetchAgents failed: ", err.message);
+    throw new Error(err.response?.data?.message);
+  }
+};
+export const apiFetchSettingConfig = async (): Promise<IFSettingConfig[]> => {
+  try {
+    const response = await axiosInstance.get<
+      any,
+      ResponseAPI<IFSettingConfig[]>
+    >(`/system/config`);
     return response.data;
   } catch (err: any) {
     console.log("apiFetchAgents failed: ", err.message);

@@ -27,3 +27,16 @@ export interface IFAgent {
   description: string;
   prompt: string;
 }
+
+export enum SettingConfigEnum {
+  SYSTEM_AGENT = "SYSTEM_AGENT",
+  TELEGRAM_AGENT = "TELEGRAM_AGENT",
+  TWITTER_POST_AGENT = "TWITTER_POST_AGENT",
+  TWITTER_REPLY_AGENT = "TWITTER_REPLY_AGENT",
+  TWITTER_PROFILE = "TWITTER_PROFILE",
+  TWITTER_TOKEN = "TWITTER_TOKEN",
+}
+export interface IFSettingConfig {
+  value: string;
+  key: SettingConfigEnum;
+}

@@ -8,6 +8,7 @@ import ChatsPage from "./pages/ChatsPage";
 import AgentsPage from "./pages/AgentsPage";
 import AgentDetailsPage from "./pages/AgentDetailsPage";
 import SettingPage from "./pages/SettingPage";
+import ConnectTwitterPage from "./pages/ConnectTwitterPage";
 
 const queryClient = new QueryClient();
 
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
         element: <div>Coming Soon</div>,
       },
     ],
+  },
+  {
+    path: "twitter/connect",
+    element: <ConnectTwitterPage />,
   },
 ]);
 
