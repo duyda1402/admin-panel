@@ -4,6 +4,7 @@ import { Controller, useForm } from "react-hook-form";
 import {
   apiFetchAgents,
   apiFetchSettingConfig,
+  apiGenerateTweet,
   apiGetLinkConnectTwitter,
   apiUpdateSettingConfig,
 } from "../api/source.api";
@@ -40,6 +41,7 @@ const SettingPage = () => {
     agentTelegram: string;
     agentPostTweet: string[];
     agentReplyTweet: string[];
+    twitterProfile: any;
   }>({
     defaultValues: {
       isEditAgentSystem: false,
@@ -74,16 +76,34 @@ const SettingPage = () => {
     mutationFn: async (data: { redirectUrl: string }) =>
       apiGetLinkConnectTwitter(data),
     onSuccess: (url) => {
-      window.open(
+      const windowOpen = window.open(
         url,
         "_blank",
         "width=450,height=700,resizable=yes,scrollbars=yes"
       );
+
+      const id = setInterval(() => {
+        if (windowOpen && windowOpen.closed) {
+          clearInterval(id);
+          refetch();
+        }
+      }, 1000);
     },
     onError: (error: any) => {
       toast.error(error?.message || "Something went wrong!");
     },
   });
+  const { mutateAsync: generateTweet, isPending: isLoadingGenerate } =
+    useMutation({
+      mutationKey: ["generate-tweets"],
+      mutationFn: async () => apiGenerateTweet(),
+      onSuccess: () => {
+        toast.success("Generate success!");
+      },
+      onError: (error: any) => {
+        toast.error(error?.message || "Something went wrong!");
+      },
+    });
 
   useEffect(() => {
     if (!isLoading && !!settings) {
@@ -95,12 +115,19 @@ const SettingPage = () => {
         {}
       );
       setValue("agentSystem", object[SettingConfigEnum.SYSTEM_AGENT] || "");
+
       setValue("agentTelegram", object[SettingConfigEnum.TELEGRAM_AGENT] || "");
       setValue(
         "agentPostTweet",
         object[SettingConfigEnum.TWITTER_POST_AGENT]
           ? object[SettingConfigEnum.TWITTER_POST_AGENT].split(",")
           : []
+      );
+      setValue(
+        "twitterProfile",
+        object[SettingConfigEnum.TWITTER_PROFILE]
+          ? JSON.parse(object[SettingConfigEnum.TWITTER_PROFILE])
+          : null
       );
       setValue(
         "agentReplyTweet",
@@ -269,7 +296,13 @@ const SettingPage = () => {
       >
         <Flex align="center" justify="space-between">
           <Typography.Title level={4}>Twitter Setting</Typography.Title>
-          <Button type="primary">Post Tweet by Agent</Button>
+          <Button
+            loading={isLoadingGenerate}
+            type="primary"
+            onClick={() => generateTweet()}
+          >
+            Generate Tweet by Agent
+          </Button>
         </Flex>
         <div style={{ flex: 1 }}>
           <Text strong>Twitter Profile:</Text>
@@ -280,23 +313,32 @@ const SettingPage = () => {
             // justify="space-between"
             style={{ paddingTop: 10, paddingBottom: 10 }}
           >
-            <Flex
-              gap={10}
-              align="center"
-              style={{
-                boxShadow: boxShadow,
-                padding: "12px 24px",
-                borderRadius: 12,
-              }}
-            >
-              <Avatar size={48} src={nameToRandomAvatar("")} />
-              <Space direction="vertical" size={2}>
-                <Text strong>DemoTest</Text>
-                <Text style={{ color: "#6b7280", fontSize: 12 }}>
-                  @demotest
-                </Text>
-              </Space>
-            </Flex>
+            {watch("twitterProfile") && (
+              <Flex
+                gap={10}
+                align="center"
+                style={{
+                  boxShadow: boxShadow,
+                  padding: "12px 24px",
+                  borderRadius: 12,
+                }}
+              >
+                <Avatar
+                  size={48}
+                  src={
+                    watch("twitterProfile")?.avatar
+                      ? watch("twitterProfile")?.avatar
+                      : nameToRandomAvatar(watch("twitterProfile")?.id)
+                  }
+                />
+                <Space direction="vertical" size={2}>
+                  <Text strong>{watch("twitterProfile")?.name}</Text>
+                  <Text style={{ color: "#6b7280", fontSize: 12 }}>
+                    @{watch("twitterProfile")?.username}
+                  </Text>
+                </Space>
+              </Flex>
+            )}
 
             <Button
               type="primary"
@@ -307,7 +349,7 @@ const SettingPage = () => {
                 })
               }
             >
-              Connect Twitter
+              {watch("twitterProfile") ? "Switch Profile" : "Connect Profile"}
             </Button>
           </Flex>
         </div>

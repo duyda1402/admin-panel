@@ -121,12 +121,13 @@ export const apiFetchAgents = async (): Promise<Array<IFAgent>> => {
   }
 };
 export const apiUpdateSettingConfig = async (
-  data: IFSettingConfig
+  data: IFSettingConfig,
+  redirectUrl?: string
 ): Promise<any> => {
   try {
     const response = await axiosInstance.post<any, ResponseAPI<any>>(
       `/system/config`,
-      data
+      { ...data, redirectUrl }
     );
     return response.data;
   } catch (err: any) {
@@ -166,6 +167,18 @@ export const apiFetchSettingConfig = async (): Promise<IFSettingConfig[]> => {
       any,
       ResponseAPI<IFSettingConfig[]>
     >(`/system/config`);
+    return response.data;
+  } catch (err: any) {
+    console.log("apiFetchAgents failed: ", err.message);
+    throw new Error(err.response?.data?.message);
+  }
+};
+
+export const apiGenerateTweet = async (): Promise<any> => {
+  try {
+    const response = await axiosInstance.get<any, ResponseAPI<any>>(
+      `/bot/twitter/post`
+    );
     return response.data;
   } catch (err: any) {
     console.log("apiFetchAgents failed: ", err.message);
