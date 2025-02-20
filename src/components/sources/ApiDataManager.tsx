@@ -18,14 +18,6 @@ function ApiDataManager() {
     queryFn: async () => apiFetchSourceByType("api"),
   });
 
-  const { mutateAsync: createSource, isPending: isLoadingCreate } = useMutation(
-    {
-      mutationKey: ["create-api"],
-      mutationFn: async (data: any) => apiCreateSource(data),
-      onSuccess: () => refetch(),
-    }
-  );
-
   const { control, handleSubmit, reset } = useForm<{
     id?: string;
     url: string;
@@ -37,6 +29,13 @@ function ApiDataManager() {
       path: "",
     },
   });
+  const { mutateAsync: createSource, isPending: isLoadingCreate } = useMutation(
+    {
+      mutationKey: ["create-api"],
+      mutationFn: async (data: any) => apiCreateSource(data),
+      onSuccess: () => refetch(),
+    }
+  );
 
   const { mutateAsync: deleteSource, isPending: isLoadingDeleteSource } =
     useMutation({
